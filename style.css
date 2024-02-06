@@ -123,28 +123,37 @@ input{
     right: 10px;
     cursor: pointer;
 }
-.modal-content{
-    top: 100px;
-    height: 250px;
-    width: 500px;
-    padding: 20px;
-    border-radius: 5px;
-    position: relative;
-    display: none;
-}
 .modal {
-    display: none; /* Inicijalno sakrij modal */
+    display: none;
     position: fixed;
-    top: 50%; /* Postavi vertikalno na sredinu ekrana */
-    left: 50%; /* Postavi horizontalno na sredinu ekrana */
-    transform: translate(-50%, -50%); /* Centriraj modal */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1050;
-    width: 80%; /* Širina modalnog prozora */
-    max-width: 600px; /* Maksimalna širina */
-    background-color: #fff; /* Boja pozadine */
+    width: 80%;
+    max-width: 600px;
+    background-color: #fff;
     border: 1px solid #999;
     border-radius: 5px;
-    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); /* Sjenčanje */
-    padding: 20px; /* Odmak unutra */
-    overflow: auto; /* Omogući scroll ako je sadržaj prevelik */
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    overflow: auto;
 }
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Poluprozirni crni overlay */
+    z-index: 1040; /* Postavite z-index ispod modala */
+}
+
+.popup.active {
+    display: block;
+}
+
+.overlay.active {
+    display: block;}
