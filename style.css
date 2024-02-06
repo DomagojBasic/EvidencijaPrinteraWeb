@@ -117,14 +117,10 @@ input{
     padding: 8px;
     border: 1px;
 } 
-.close{
+.close {
     position: absolute;
-    top: -15px;
-    right:-5px ;
-    height: auto;
-    width: 20px;
-    border-radius: 50%;
-    box-shadow: 6px 6px 29px -4px rgba(0, 0, 0, 75);
+    top: 10px;
+    right: 10px;
     cursor: pointer;
 }
 .modal-content{
@@ -134,4 +130,21 @@ input{
     padding: 20px;
     border-radius: 5px;
     position: relative;
+    display: none;
+}
+.modal {
+    display: none; /* Inicijalno sakrij modal */
+    position: fixed;
+    top: 50%; /* Postavi vertikalno na sredinu ekrana */
+    left: 50%; /* Postavi horizontalno na sredinu ekrana */
+    transform: translate(-50%, -50%); /* Centriraj modal */
+    z-index: 1050;
+    width: 80%; /* Širina modalnog prozora */
+    max-width: 600px; /* Maksimalna širina */
+    background-color: #fff; /* Boja pozadine */
+    border: 1px solid #999;
+    border-radius: 5px;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); /* Sjenčanje */
+    padding: 20px; /* Odmak unutra */
+    overflow: auto; /* Omogući scroll ako je sadržaj prevelik */
 }

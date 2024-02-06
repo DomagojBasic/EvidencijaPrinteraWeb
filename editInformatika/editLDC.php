@@ -7,6 +7,10 @@ if ($conn->connect_error) {
 if (isset($_GET['SN'])) {
     $SN = $_GET['SN'];
 
+   
+
+
+
     // Use prepared statement to avoid SQL injection
     $query = "UPDATE `printer` SET Kategorija = 'LDC' WHERE Kategorija = 'Informatika' AND SN = ?";
     
