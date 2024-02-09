@@ -4,27 +4,31 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (isset($_GET['SN'])) {
+if (isset($_GET['SN']) && isset($_GET['ImeObjekta'])) {
     $SN = $_GET['SN'];
+    $ImeObjekta = $_GET['ImeObjekta'];
+    $informatika = 'Informatika';
 
-   
-
-
-
-    // Use prepared statement to avoid SQL injection
-    $query = "UPDATE `printer` SET Kategorija = 'LDC' WHERE Kategorija = 'Informatika' AND SN = ?";
-    
     // Prepare the statement
+    $query = "UPDATE printer p 
+              JOIN objekti o ON p.ObjekatID = o.ImeObjekta
+              SET p.Kategorija = 'LDC', p.ObjekatID = ?
+              WHERE p.Kategorija = ? AND p.ObjekatID = ? AND p.SN = ?";
+
     $stmt = mysqli_prepare($conn, $query);
 
+    if (!$stmt) {
+        die("Preparation failed: " . mysqli_error($conn));
+    }
+
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "s", $SN);
+    mysqli_stmt_bind_param($stmt, "ssss", $ImeObjekta, $informatika, $informatika, $SN);
 
     // Execute the statement
     $result = mysqli_stmt_execute($stmt);
 
     if (!$result) {
-        die("Query failed: " . mysqli_error($conn));
+        die("Query execution failed: " . mysqli_error($conn));
     }
 
     echo "Query executed successfully!";

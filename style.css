@@ -87,33 +87,11 @@ th, td {
     border: 2px solid #ddd;
 }
 
-.popup{
 
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 100px;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-}
-.popup-content{
-    height: 250px;
-    width: 500px;
-    background: rgb(255, 157, 157);
-    padding: 20px;
-    border-radius: 5px;
-    position: relative;
-}
-input{
-    margin: 20px auto;
+.input{
+    margin: 20px auto; /* Centriranje vertikalno i horizontalno */
     display: block;
-    align-items: center;
-   right: 500px;
-    align-content: center;
-    width: 50%;
+    width: 50%; /* Širina elementa */
     padding: 8px;
     border: 1px;
 } 
@@ -124,13 +102,15 @@ input{
     cursor: pointer;
 }
 .modal {
+    text-align: center;
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1050;
-    width: 80%;
+    width: 40%;
+    height: 20%;
     max-width: 600px;
     background-color: #fff;
     border: 1px solid #999;
@@ -140,20 +120,54 @@ input{
     overflow: auto;
 }
 
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Poluprozirni crni overlay */
-    z-index: 1040; /* Postavite z-index ispod modala */
-}
-
 .popup.active {
     display: block;
 }
 
 .overlay.active {
     display: block;}
+    
+/* Promijenjena definicija za .popup-content */
+.popup-content {
+    height: 250px;
+    width: 100px;
+    background: rgb(255, 157, 157);
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    /* Primjer postavljanja top i left umjesto right i align-content */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Promijenjena definicija za .popup i .overlay */
+.popup,
+.overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050;
+}
+
+/* Dodane definicije za .popup.active i .overlay.active */
+.popup.active,
+.overlay.active {
+    display: block;
+}
+
+/* Definicija za .objekt_list */
+.objekt_list {
+    text-align: center;
+    position: fixed;
+    background-color: aqua;
+}
+.centered-select {
+    display: block;
+    margin: 0 auto; /* Horizontalno centriranje */
+    padding: 8px;
+    border: 1px solid #000;
+    width: 50%; /* Postavljanje širine */
+}

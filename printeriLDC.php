@@ -29,6 +29,8 @@ $(document).ready(function() {
             success: function(response) {
                 // Ovdje možete obraditi odgovor ako želite nešto prikazati korisniku
                 console.log(response);
+                location.reload();
+                
             },
             error: function(error) {
                 // Ovdje možete obraditi pogreške ako dođe do problema s AJAX pozivom
@@ -59,6 +61,7 @@ $(document).ready(function() {
             success: function(response) {
                 // Ovdje možete obraditi odgovor ako želite nešto prikazati korisniku
                 console.log(response);
+                 location.reload();
             },
             error: function(error) {
                 // Ovdje možete obraditi pogreške ako dođe do problema s AJAX pozivom
@@ -79,48 +82,60 @@ $(document).ready(function() {
             <a href="/index.php">Printeri u informatici</a>
             <a href="/printeriServis.php">Printeri na servisu</a>
             <a href="/printeriLDC.php">Printeri na LDC-u</a>
+            <a href="/Objekti.php">Objekti</a>
         </nav>
     </header>
     
     <section class="main-content">
         <h1>Printeri na LDC-u</h1>
-        
-        <table>
-            <tr>
-                <th>RBr.</th>
-                <th>Model</th>
-                <th>SN</th>
-            </tr>
-
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>RBr.</th>
+                    <th>Model</th>
+                    <th>SN</th>
+                    <th>Ime objekta</th>
+                    <th>Adresa Objekta</th>
+                    <th>Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
             <?php
-            $conn = mysqli_connect("localhost", "root", "", "printeri");// Dodajte ime baze podataka
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-            $sql = "SELECT Rbr, Model, SN, Kategorija  FROM printer";
-            $result = $conn->query($sql);
+$conn = mysqli_connect("localhost", "root", "", "printeri"); // Dodajte ime baze podataka
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$sql = "SELECT p.Rbr, p.Model, p.SN,p.Kategorija, o.ImeObjekta, o.AdresaObjekta
+        FROM printer p
+        JOIN objekti o ON p.ObjekatID = o.ImeObjekta
+        WHERE p.Kategorija = 'LDC'";
+$result = $conn->query($sql);
 
-            if ($result->num_rows > 0 ) {
-                while ($row = $result->fetch_assoc()) {
-                    if ($row["Kategorija"] == "LDC") {
-                        echo "<tr>";
-                    echo "<td>" . $row["Rbr"] . "</td>";
-                    echo "<td>" . $row["Model"] . "</td>";
-                    echo "<td>" . $row["SN"] . "</td>";
-                    echo '<td><a id="btnInformatika' . $row['Rbr'] . '" href="#" data-kategorija="' . $row['Kategorija'] . '" data-sn="' . $row['SN'] .'" class="btn btn-danger informatika-button">Informatika</a></td>';
-                    echo '<td><a id="btnServis' . $row['Rbr'] . '" href="#" data-kategorija="' . $row['Kategorija'] . '" data-sn="' . $row['SN'] .'" class="btn btn-danger servis-button">Servis</a></td>';
-                    echo "</tr>";
-                    } else {
-                       
-                    }
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        if ($row["Kategorija"] == "LDC") {
+            echo "<tr>";
+            echo "<td>" . $row["Rbr"] . "</td>";
+            echo "<td>" . $row["Model"] . "</td>";
+            echo "<td>" . $row["SN"] . "</td>";
+            echo "<td>" . $row["ImeObjekta"] . "</td>";
+            echo "<td>" . $row["AdresaObjekta"] . "</td>";
+            echo '<td>
+                    <button type="button" class="btn btn-danger informatika-button" data-toggle="modal" data-target="#myModal_Servis" data-sn="' . $row["SN"] . '" data-kategorija="Informatika">Informatika</button>
+                    <button type="button" class="btn btn-danger servis-button" data-toggle="modal" data-target="#myModal_Servis" data-sn="' . $row["SN"] . '" data-kategorija="Servis">Servis</button>
+                  </td>';
+            echo "</tr>";
+        }
+    }
+} else {
+    echo "<tr><td colspan='4'>Nema rezultata</td></tr>";
+}
 
-                }
-            } else {
-                echo "<tr><td colspan='2'>Nema rezultata</td></tr>";
-            }
+// Zatvaranje konekcije s bazom podataka
+$conn->close();
+?>
 
-            $conn->close();
-            ?>
+        </tbody>
         </table>
     </section>
 

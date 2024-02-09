@@ -19,4 +19,7 @@ function getObjekt(val) {
     return false; // Prevent default form submission behavior
 
         }
+
+    
+
     </script>

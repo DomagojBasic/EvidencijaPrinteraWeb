@@ -29,6 +29,7 @@ $(document).ready(function() {
             success: function(response) {
                 // Ovdje možete obraditi odgovor ako želite nešto prikazati korisniku
                 console.log(response);
+                location.reload();
             },
             error: function(error) {
                 // Ovdje možete obraditi pogreške ako dođe do problema s AJAX pozivom
@@ -45,7 +46,7 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     // Korisnik klikne na btnInformatika
-    $('.LDC-button').on('click', function(e) {
+    $('.ldc-button').on('click', function(e) {
         e.preventDefault();
 
         // Dobavi SN i Kategorija vrijednost iz data-atributa
@@ -60,6 +61,7 @@ $(document).ready(function() {
             success: function(response) {
                 // Ovdje možete obraditi odgovor ako želite nešto prikazati korisniku
                 console.log(response);
+                location.reload();
             },
             error: function(error) {
                 // Ovdje možete obraditi pogreške ako dođe do problema s AJAX pozivom
@@ -71,6 +73,7 @@ $(document).ready(function() {
 </script>
 <!--Procedura za click Informatika -->
 
+</head>
 <body>
 
     <header class="header">
@@ -79,19 +82,21 @@ $(document).ready(function() {
             <a href="/index.php">Printeri u informatici</a>
             <a href="/printeriServis.php">Printeri na servisu</a>
             <a href="/printeriLDC.php">Printeri na LDC-u</a>
+            <a href="/objekti.php">Objekti</a>
         </nav>
     </header>
-    
     <section class="main-content">
         <h1>Printeri na servisu</h1>
-        
-        <table>
-            <tr>
-                <th>RBr.</th>
-                <th>Model</th>
-                <th>SN</th>
-            </tr>
-
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>RBr.</th>
+                    <th>Model</th>
+                    <th>SN</th>
+                    <th>Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
             <?php
             $conn = mysqli_connect("localhost", "root", "", "printeri");// Dodajte ime baze podataka
             if ($conn->connect_error) {
@@ -104,23 +109,25 @@ $(document).ready(function() {
                 while ($row = $result->fetch_assoc()) {
                     if ($row["Kategorija"] == "Servis") {
                         echo "<tr>";
-                    echo "<td>" . $row["Rbr"] . "</td>";
-                    echo "<td>" . $row["Model"] . "</td>";
-                    echo "<td>" . $row["SN"] . "</td>";
-                    echo '<td><a id="btnLDC_' . $row['Rbr'] . '" href="#" data-kategorija="' . $row['Kategorija'] . '" data-sn="' . $row['SN'] .'" class="btn btn-danger LDC-button">LDC</a></td>';
-                    echo '<td><a id="btnInformatika' . $row['Rbr'] . '" href="#" data-kategorija="' . $row['Kategorija'] . '" data-sn="' . $row['SN'] .'" class="btn btn-danger informatika-button">Informatika</a></td>';
-                    echo "</tr>";
-                    } else {
-                    
-                    }
+                        echo "<td>" . $row["Rbr"] . "</td>";
+                        echo "<td>" . $row["Model"] . "</td>";
+                        echo "<td>" . $row["SN"] . "</td>";
+                        echo '<td>
 
+                        <button type="button" class="btn btn-danger ldc-button" data-toggle="modal" data-target="#myModal_Servis" data-sn="' . $row["SN"] . '" data-kategorija="LDC">LDC</button>
+                        <button type="button" class="btn btn-danger informatika-button" data-toggle="modal" data-target="#myModal_Servis" data-sn="' . $row["SN"] . '" data-kategorija="Informatika">Informatika</button>
+                              </td>';
+                        echo "</tr>";
+                    }
                 }
             } else {
-                echo "<tr><td colspan='2'>Nema rezultata</td></tr>";
+                echo "<tr><td colspan='4'>Nema rezultata</td></tr>";
             }
-
+        
+            // Zatvaranje konekcije s bazom podataka
             $conn->close();
             ?>
+        </tbody>
         </table>
     </section>
 

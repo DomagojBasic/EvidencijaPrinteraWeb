@@ -8,10 +8,14 @@ if (isset($_GET['SN'])) {
     $SN = $_GET['SN'];
 
     // Use prepared statement to avoid SQL injection
-    $query = "UPDATE `printer` SET Kategorija = 'Informatika' WHERE Kategorija = 'LDC' AND SN = ?";
-    
+    $query = "UPDATE `printer` SET Kategorija = 'Informatika', ObjekatID = 'Informatika' WHERE SN = ?";
+
     // Prepare the statement
     $stmt = mysqli_prepare($conn, $query);
+
+    if (!$stmt) {
+        die("Preparation failed: " . mysqli_error($conn));
+    }
 
     // Bind parameters
     mysqli_stmt_bind_param($stmt, "s", $SN);
