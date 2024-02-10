@@ -30,13 +30,13 @@
     </header>
     <section class="main-content">
         <h1>Zamjenski printeri u informatici</h1>
-        <table class="table">
-            <thead>
+        <table class="table ">
+            <thead class = "thead-bar">
                 <tr>
-                    <th>RBr.</th>
-                    <th>Model</th>
-                    <th>SN</th>
-                    <th>Akcija</th>
+                    <th scope="col">RBr.</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">SN</th>
+                    <th scope="col">Akcija</th>
                 </tr>
             </thead>
             <tbody>
