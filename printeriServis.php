@@ -82,7 +82,6 @@ $(document).ready(function() {
             <a href="/index.php">Printeri u informatici</a>
             <a href="/printeriServis.php">Printeri na servisu</a>
             <a href="/printeriLDC.php">Printeri na LDC-u</a>
-            <a href="/objekti.php">Objekti</a>
         </nav>
     </header>
     <section class="main-content">

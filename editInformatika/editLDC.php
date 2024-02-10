@@ -12,7 +12,7 @@ if (isset($_GET['SN']) && isset($_GET['ImeObjekta'])) {
     // Prepare the statement
     $query = "UPDATE printer p 
               JOIN objekti o ON p.ObjekatID = o.ImeObjekta
-              SET p.Kategorija = 'LDC', p.ObjekatID = ?
+              SET p.Kategorija = 'LDC', p.ObjekatID = ?, p.Datum = CURRENT_DATE()
               WHERE p.Kategorija = ? AND p.ObjekatID = ? AND p.SN = ?";
 
     $stmt = mysqli_prepare($conn, $query);

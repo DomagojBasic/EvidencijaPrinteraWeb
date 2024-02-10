@@ -82,7 +82,6 @@ $(document).ready(function() {
             <a href="/index.php">Printeri u informatici</a>
             <a href="/printeriServis.php">Printeri na servisu</a>
             <a href="/printeriLDC.php">Printeri na LDC-u</a>
-            <a href="/Objekti.php">Objekti</a>
         </nav>
     </header>
     
@@ -96,6 +95,7 @@ $(document).ready(function() {
                     <th>SN</th>
                     <th>Ime objekta</th>
                     <th>Adresa Objekta</th>
+                    <th>Datum slanja</th>
                     <th>Akcija</th>
                 </tr>
             </thead>
@@ -105,7 +105,7 @@ $conn = mysqli_connect("localhost", "root", "", "printeri"); // Dodajte ime baze
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "SELECT p.Rbr, p.Model, p.SN,p.Kategorija, o.ImeObjekta, o.AdresaObjekta
+$sql = "SELECT p.Rbr, p.Model, p.SN, p.Kategorija, p.Datum, o.ImeObjekta, o.AdresaObjekta
         FROM printer p
         JOIN objekti o ON p.ObjekatID = o.ImeObjekta
         WHERE p.Kategorija = 'LDC'";
@@ -114,12 +114,16 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         if ($row["Kategorija"] == "LDC") {
+            $datumstari = $row["Datum"];
+            $datumNovo = \DateTime::createFromFormat("Y-m-d", $datumstari)->format("d.m.Y");
+
             echo "<tr>";
             echo "<td>" . $row["Rbr"] . "</td>";
             echo "<td>" . $row["Model"] . "</td>";
             echo "<td>" . $row["SN"] . "</td>";
             echo "<td>" . $row["ImeObjekta"] . "</td>";
             echo "<td>" . $row["AdresaObjekta"] . "</td>";
+            echo "<td>" . $datumNovo . "</td>"; // Prikazujemo formatirani datum
             echo '<td>
                     <button type="button" class="btn btn-danger informatika-button" data-toggle="modal" data-target="#myModal_Servis" data-sn="' . $row["SN"] . '" data-kategorija="Informatika">Informatika</button>
                     <button type="button" class="btn btn-danger servis-button" data-toggle="modal" data-target="#myModal_Servis" data-sn="' . $row["SN"] . '" data-kategorija="Servis">Servis</button>
@@ -130,6 +134,7 @@ if ($result->num_rows > 0) {
 } else {
     echo "<tr><td colspan='4'>Nema rezultata</td></tr>";
 }
+
 
 // Zatvaranje konekcije s bazom podataka
 $conn->close();

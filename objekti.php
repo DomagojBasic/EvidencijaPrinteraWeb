@@ -27,7 +27,6 @@
         
         <table>
             <tr>
-                <th>RBr.</th>
                 <th>Ime objekta</th>
                 <th>Adresa</th>
             </tr>
@@ -37,14 +36,13 @@
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
-            $sql = "SELECT Rbr, ImeObjekta, AdresaObjekta FROM objekti";
+            $sql = "SELECT ImeObjekta, AdresaObjekta FROM objekti";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0 ) {
                 while ($row = $result->fetch_assoc()) {
                    
                         echo "<tr>";
-                    echo "<td>" . $row["Rbr"] . "</td>";
                     echo "<td>" . $row["ImeObjekta"] . "</td>";
                     echo "<td>" . $row["AdresaObjekta"] . "</td>";
                     echo "</tr>";
